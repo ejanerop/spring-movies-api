@@ -1,11 +1,14 @@
 package com.janero.movies.person;
 
-import java.sql.Date;
 import java.util.Set;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import com.janero.movies.movie.Movie;
 
 @Entity
@@ -16,16 +19,18 @@ public class Person {
     private Long id;
     private String name;
     private String biography;
+
+    @Temporal(TemporalType.DATE)
     private Date birthday;
+    @Temporal(TemporalType.DATE)
     private Date deathday;
     private String placeOfBirth;
 
     @OneToMany(mappedBy = "director")
     private Set<Movie> moviesAsDirector;
-    // @ManyToMany()
-    // @JoinTable(name = "actor_movie", joinColumns = @JoinColumn(name = "person_id"),
-    // inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    // private Set<Movie> moviesAsActor;
+
+    @ManyToMany()
+    private Set<Movie> moviesAsActor;
 
     public Person() {
 
@@ -79,5 +84,13 @@ public class Person {
     public void setName(String name) {
         this.name = name;
     }
+
+    // public Set<Movie> getMoviesAsDirector() {
+    // return moviesAsDirector;
+    // }
+
+    // public Set<Movie> getMoviesAsActor() {
+    // return moviesAsActor;
+    // }
 
 }
