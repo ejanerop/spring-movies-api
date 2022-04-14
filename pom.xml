@@ -46,6 +46,11 @@
 			<artifactId>lombok</artifactId>
 			<version>0.9.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<scope>test</scope>
+		  </dependency>
 	</dependencies>
 	<repositories>
 		<repository>
