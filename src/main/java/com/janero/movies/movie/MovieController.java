@@ -19,30 +19,34 @@ public class MovieController {
     public static final int DEFAULT_PAGE_SIZE = 10;
 
     @Autowired
-    private MovieRepository movieRepository;
+    private MovieService movieService;
 
     @GetMapping()
     public @ResponseBody Iterable<Movie> getMovies(@RequestParam(required = false) String name,
             @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) String overview,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
 
         page = page == null ? 0 : page;
         size = size == null ? DEFAULT_PAGE_SIZE : size;
 
-        Pageable pageable = PageRequest.of(page, size);
-        if (name == null) {
-            return movieRepository.findAll(pageable);
-        } else {
-            return movieRepository.findByNameContaining(name, pageable);
+        Movie movie = new Movie();
+        movie.setName(name);
+        movie.setOverview(overview);
+        if (year != null) {
+            movie.setYear(year);
         }
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return movieService.getMovies(movie, pageable);
     }
 
     @GetMapping(value = "/{id}")
     public @ResponseBody Movie getMovie(@PathVariable Long id) {
-
         try {
-            return movieRepository.findById(id).get();
+            return movieService.getMovie(id);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
         }
