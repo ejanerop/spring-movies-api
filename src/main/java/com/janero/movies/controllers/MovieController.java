@@ -1,4 +1,4 @@
-package com.janero.movies.movie;
+package com.janero.movies.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.NoSuchElementException;
+import com.janero.movies.model.Movie;
+import com.janero.movies.movie.MovieService;
 
 @RestController
 @RequestMapping(path = "/movie")

@@ -1,5 +1,7 @@
-package com.janero.movies.person;
+package com.janero.movies.controllers;
 
+import com.janero.movies.model.Person;
+import com.janero.movies.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.PageRequest;

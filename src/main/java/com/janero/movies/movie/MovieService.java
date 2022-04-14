@@ -1,6 +1,7 @@
 package com.janero.movies.movie;
 
 import java.util.NoSuchElementException;
+import com.janero.movies.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,8 +16,9 @@ public class MovieService {
     MovieRepository movieRepository;
 
     public Page<Movie> getMovies(Movie movie, Pageable pageable) {
-        ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
-                .withIgnoreCase().withIgnoreNullValues();
+        ExampleMatcher matcher =
+                ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                        .withIgnoreCase().withIgnoreNullValues();
         return movieRepository.findAll(Example.of(movie, matcher), pageable);
     }
 

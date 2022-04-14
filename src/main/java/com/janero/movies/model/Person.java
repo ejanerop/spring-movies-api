@@ -1,4 +1,4 @@
-package com.janero.movies.person;
+package com.janero.movies.model;
 
 import java.util.Set;
 import java.util.Date;
@@ -9,7 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import com.janero.movies.movie.Movie;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Person {
@@ -27,9 +27,11 @@ public class Person {
     private String placeOfBirth;
 
     @OneToMany(mappedBy = "director")
+    @JsonBackReference
     private Set<Movie> moviesAsDirector;
 
     @ManyToMany()
+    @JsonBackReference
     private Set<Movie> moviesAsActor;
 
     public Person() {
@@ -85,12 +87,12 @@ public class Person {
         this.name = name;
     }
 
-    // public Set<Movie> getMoviesAsDirector() {
-    // return moviesAsDirector;
-    // }
+    public Set<Movie> getMoviesAsDirector() {
+        return moviesAsDirector;
+    }
 
-    // public Set<Movie> getMoviesAsActor() {
-    // return moviesAsActor;
-    // }
+    public Set<Movie> getMoviesAsActor() {
+        return moviesAsActor;
+    }
 
 }

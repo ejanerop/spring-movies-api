@@ -1,4 +1,4 @@
-package com.janero.movies.movie;
+package com.janero.movies.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
-import com.janero.movies.person.Person;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Movie {
@@ -27,9 +27,11 @@ public class Movie {
     private Date releaseDate;
 
     @ManyToMany(mappedBy = "moviesAsActor")
+    @JsonManagedReference
     private Set<Person> actors;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "director_id", nullable = false)
     private Person director;
 
