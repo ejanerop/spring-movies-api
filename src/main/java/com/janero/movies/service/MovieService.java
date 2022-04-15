@@ -40,7 +40,8 @@ public class MovieService {
         return (Specification<Movie>) (root, query, builder) -> {
             ExampleMatcher matcher = ExampleMatcher.matching()
                     .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
-                    .withIgnorePaths("releaseDate").withIgnoreCase().withIgnoreNullValues();
+                    .withIgnorePaths("releaseDate", "budget", "revenue", "runtime").withIgnoreCase()
+                    .withIgnoreNullValues();
             final List<Predicate> predicates = new ArrayList<>();
             int year = movie.getYear();
             Date from = new Date(year, 0, 1);
