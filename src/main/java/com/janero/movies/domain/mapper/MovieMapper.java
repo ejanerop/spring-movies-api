@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class MovieMapper {
+public class MovieMapper implements Mapper<Movie, MovieDTO> {
 
     @Autowired
     private PersonMapper personMapper;
 
+    @Override
     public MovieDTO mapToDTO(Movie movie) {
         MovieDTO movieDTO = new MovieDTO();
         movieDTO.setId(movie.getId());
@@ -26,5 +27,6 @@ public class MovieMapper {
                 .collect(Collectors.toSet()));
         movieDTO.setDirector(personMapper.mapToMoviePersonDTO(movie.getDirector()));
         return movieDTO;
-    };
+    }
+
 }

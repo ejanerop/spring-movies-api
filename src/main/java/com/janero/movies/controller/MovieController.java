@@ -5,15 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import java.util.NoSuchElementException;
 import com.janero.movies.domain.dto.MovieDTO;
 import com.janero.movies.domain.dto.criteria.MovieCriteria;
+import com.janero.movies.domain.dto.response.Response;
+import com.janero.movies.domain.dto.response.ResponseMessage;
 import com.janero.movies.domain.mapper.MovieMapper;
 import com.janero.movies.domain.model.Constants;
 import com.janero.movies.domain.model.Movie;
@@ -52,11 +54,13 @@ public class MovieController {
     }
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody MovieDTO getMovie(@PathVariable Long id) {
+    public @ResponseBody ResponseEntity<Response> getMovie(@PathVariable Long id) {
         try {
-            return movieMapper.mapToDTO(movieService.getMovie(id));
+            MovieDTO movieDTO = movieMapper.mapToDTO(movieService.getMovie(id));
+            return ResponseEntity.ok().body(movieDTO);
         } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+            ResponseMessage message = new ResponseMessage(404, "Movie not found", false);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
     }
 

@@ -2,6 +2,7 @@ package com.janero.movies.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import javax.persistence.criteria.Predicate;
 import com.janero.movies.domain.model.Person;
 import com.janero.movies.repository.PersonRepository;
@@ -21,14 +22,23 @@ public class PersonService {
     PersonRepository personRepository;
 
     public Page<Person> getActors(Person person, Pageable pageable) {
-        return personRepository.findAll(getPerson(person, "moviesAsActor"), pageable);
+        return personRepository.findAll(personType(person, "moviesAsActor"), pageable);
     }
 
     public Page<Person> getDirectors(Person person, Pageable pageable) {
-        return personRepository.findAll(getPerson(person, "moviesAsDirector"), pageable);
+        return personRepository.findAll(personType(person, "moviesAsDirector"), pageable);
     }
 
-    public Specification<Person> getPerson(Person person, String relation) {
+    public Person getPerson(Long id) {
+        return personRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Person not found"));
+    }
+
+    public Person createPerson(Person person) {
+        return personRepository.save(person);
+    }
+
+    public Specification<Person> personType(Person person, String relation) {
         return (Specification<Person>) (root, query, builder) -> {
             ExampleMatcher matcher = ExampleMatcher.matching()
                     .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING).withIgnoreCase()

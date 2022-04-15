@@ -32,6 +32,10 @@ public class MovieService {
                 .orElseThrow(() -> new NoSuchElementException("Movie not found"));
     }
 
+    public Movie createMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
+
     public Specification<Movie> getMoviesFromYearAndExample(Movie movie) {
         return (Specification<Movie>) (root, query, builder) -> {
             ExampleMatcher matcher = ExampleMatcher.matching()

@@ -6,10 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.janero.movies.domain.dto.response.Response;
 
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class PersonDTO {
+public class PersonDTO implements Response {
 
     private @Getter @Setter Long id;
     private @Getter @Setter String name;
