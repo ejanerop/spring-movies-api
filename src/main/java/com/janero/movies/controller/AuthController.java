@@ -1,4 +1,4 @@
-package com.janero.movies.controllers;
+package com.janero.movies.controller;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
