@@ -27,6 +27,7 @@ public class MovieController {
     public @ResponseBody Iterable<Movie> getMovies(@RequestParam(required = false) String name,
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) String overview,
+            @RequestParam(required = false) Boolean adult,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
 
@@ -38,6 +39,9 @@ public class MovieController {
         movie.setOverview(overview);
         if (year != null) {
             movie.setYear(year);
+        }
+        if (adult != null) {
+            movie.setAdult(adult);
         }
 
         Pageable pageable = PageRequest.of(page, size);
