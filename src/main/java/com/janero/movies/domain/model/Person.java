@@ -27,6 +27,7 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private @Getter @Setter Date deathday;
     private @Getter @Setter String placeOfBirth;
+    private @Getter @Setter Boolean adult;
 
     @OneToMany(mappedBy = "director")
     @JsonBackReference

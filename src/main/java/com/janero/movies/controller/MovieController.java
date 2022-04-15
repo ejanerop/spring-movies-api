@@ -7,41 +7,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.NoSuchElementException;
+import com.janero.movies.domain.dto.criteria.MovieCriteria;
+import com.janero.movies.domain.model.Constants;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.service.MovieService;
 
 @RestController
 @RequestMapping(path = "/movies")
 public class MovieController {
-    public static final int DEFAULT_PAGE_SIZE = 10;
 
     @Autowired
     private MovieService movieService;
 
     @GetMapping()
-    public @ResponseBody Iterable<Movie> getMovies(@RequestParam(required = false) String name,
-            @RequestParam(required = false) Integer year,
-            @RequestParam(required = false) String overview,
-            @RequestParam(required = false) Boolean adult,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
+    public @ResponseBody Iterable<Movie> getMovies(MovieCriteria criteria) {
 
-        page = page == null ? 0 : page;
-        size = size == null ? DEFAULT_PAGE_SIZE : size;
+        int page = criteria.getPage() == null ? 0 : criteria.getPage();
+        int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
 
         Movie movie = new Movie();
-        movie.setName(name);
-        movie.setOverview(overview);
-        if (year != null) {
-            movie.setYear(year);
+        movie.setName(criteria.getName());
+        movie.setOverview(criteria.getOverview());
+        if (criteria.getYear() != null) {
+            movie.setYear(criteria.getYear());
         }
-        if (adult != null) {
-            movie.setAdult(adult);
+        if (criteria.getAdult() != null) {
+            movie.setAdult(criteria.getAdult());
         }
 
         Pageable pageable = PageRequest.of(page, size);

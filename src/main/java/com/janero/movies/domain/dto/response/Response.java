@@ -1,4 +1,4 @@
-package com.janero.movies.domain;
+package com.janero.movies.domain.dto.response;
 
 public interface Response {
 

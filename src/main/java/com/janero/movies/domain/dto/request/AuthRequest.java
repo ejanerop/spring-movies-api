@@ -1,4 +1,4 @@
-package com.janero.movies.domain.dto;
+package com.janero.movies.domain.dto.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -13,4 +13,5 @@ public class AuthRequest {
 
     @NotNull
     private String password;
+
 }
