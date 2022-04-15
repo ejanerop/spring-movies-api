@@ -28,7 +28,7 @@ public class Movie {
     private @Getter @Setter String name;
     private @Getter @Setter String overview;
     @Temporal(TemporalType.DATE)
-    private @Getter Date releaseDate;
+    private @Getter @Setter Date releaseDate;
     private @Getter @Setter Boolean adult;
     private @Getter @Setter int budget;
     private @Getter @Setter int revenue;
@@ -36,25 +36,17 @@ public class Movie {
 
     @ManyToMany(mappedBy = "moviesAsActor")
     @JsonManagedReference
-    private @Getter Set<Person> actors;
+    private @Getter @Setter Set<Person> actors;
 
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "director_id", nullable = false)
-    private @Getter Person director;
+    private @Getter @Setter Person director;
 
-    public Movie(String name, String overview, String releaseDate) {
+    public Movie(String name, String overview, Date releaseDate) {
         this.setName(name);
         this.setOverview(overview);
         this.setReleaseDate(releaseDate);
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        try {
-            this.releaseDate = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setYear(int year) {
