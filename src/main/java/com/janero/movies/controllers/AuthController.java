@@ -1,9 +1,12 @@
 package com.janero.movies.controllers;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import com.janero.movies.config.JwtTokenUtil;
+import com.janero.movies.domain.Response;
 import com.janero.movies.domain.dto.AuthRequest;
 import com.janero.movies.domain.dto.CreateUserRequest;
+import com.janero.movies.domain.dto.ResponseMessage;
 import com.janero.movies.domain.model.User;
 import com.janero.movies.service.UserService;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<User> login(@RequestBody @Valid AuthRequest request) {
+    public ResponseEntity<Response> login(@RequestBody @Valid AuthRequest request) {
         try {
             System.out.println(request.getUsername());
             System.out.println(request.getPassword());
@@ -47,15 +50,19 @@ public class AuthController {
                     .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
                     .body(user);
         } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            ResponseMessage message = new ResponseMessage(401, ex.getMessage(), false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
         }
     }
 
     @PostMapping("register")
-    public User register(@RequestBody @Valid CreateUserRequest request) {
-        return userService.create(request);
+    public ResponseEntity<Response> register(@RequestBody @Valid CreateUserRequest request) {
+        try {
+            User user = userService.create(request);
+            return ResponseEntity.ok().body(user);
+        } catch (ValidationException e) {
+            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+        }
     }
 }
