@@ -36,7 +36,7 @@ public class Movie {
 
     @ManyToMany(mappedBy = "moviesAsActor")
     @JsonManagedReference
-    private Set<Person> actors;
+    private @Getter Set<Person> actors;
 
     @ManyToOne
     @JsonManagedReference
