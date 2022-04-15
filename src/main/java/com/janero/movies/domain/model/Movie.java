@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,6 +60,14 @@ public class Movie {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @JsonIgnore
+    public int getYear() {
+        if (this.releaseDate != null) {
+            return this.releaseDate.getYear();
+        }
+        return -1;
     }
 
 }
