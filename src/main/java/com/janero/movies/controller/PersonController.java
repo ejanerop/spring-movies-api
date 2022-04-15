@@ -91,7 +91,7 @@ public class PersonController {
         try {
             Person person = personMapper.mapToEntity(request);
             personService.createPerson(person);
-            return ResponseEntity.ok().body(personMapper.mapToDTO(person));
+            return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.mapToDTO(person));
         } catch (Exception e) {
             ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
