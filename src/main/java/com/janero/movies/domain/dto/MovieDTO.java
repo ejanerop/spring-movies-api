@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.janero.movies.domain.dto.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class MovieDTO {
+public class MovieDTO implements Response {
 
     private @Getter @Setter Long id;
     private @Getter @Setter String name;

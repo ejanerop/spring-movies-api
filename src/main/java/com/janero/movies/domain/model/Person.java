@@ -37,9 +37,7 @@ public class Person {
     @JsonBackReference
     private Set<Movie> moviesAsActor;
 
-    public Person() {
-
-    }
+    public Person() {}
 
     public Person(String name, String biography, Date birthday, Date deathday,
             String placeOfBirth) {
