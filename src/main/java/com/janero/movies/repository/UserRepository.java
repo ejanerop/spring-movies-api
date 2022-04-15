@@ -1,7 +1,7 @@
 package com.janero.movies.repository;
 
 import java.util.Optional;
-import com.janero.movies.model.User;
+import com.janero.movies.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

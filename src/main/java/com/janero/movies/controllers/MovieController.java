@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.NoSuchElementException;
-import com.janero.movies.model.Movie;
-import com.janero.movies.movie.MovieService;
+import com.janero.movies.domain.model.Movie;
+import com.janero.movies.service.MovieService;
 
 @RestController
-@RequestMapping(path = "/movie")
+@RequestMapping(path = "/movies")
 public class MovieController {
     public static final int DEFAULT_PAGE_SIZE = 10;
 

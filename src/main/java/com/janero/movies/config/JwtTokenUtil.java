@@ -2,7 +2,7 @@ package com.janero.movies.config;
 
 import static java.lang.String.format;
 import java.util.Date;
-import com.janero.movies.model.User;
+import com.janero.movies.domain.model.User;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

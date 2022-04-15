@@ -1,7 +1,8 @@
-package com.janero.movies.movie;
+package com.janero.movies.service;
 
 import java.util.NoSuchElementException;
-import com.janero.movies.model.Movie;
+import com.janero.movies.domain.model.Movie;
+import com.janero.movies.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

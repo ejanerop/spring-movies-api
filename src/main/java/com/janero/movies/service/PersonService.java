@@ -1,6 +1,6 @@
 package com.janero.movies.service;
 
-import com.janero.movies.model.Person;
+import com.janero.movies.domain.model.Person;
 import com.janero.movies.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

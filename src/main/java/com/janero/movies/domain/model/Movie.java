@@ -1,4 +1,4 @@
-package com.janero.movies.model;
+package com.janero.movies.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,18 +13,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
 public class Movie {
 
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
-    private String overview;
+    private @Getter @Setter String name;
+    private @Getter @Setter String overview;
 
     @Temporal(TemporalType.DATE)
-    private Date releaseDate;
+    private @Getter Date releaseDate;
 
     @ManyToMany(mappedBy = "moviesAsActor")
     @JsonManagedReference
@@ -33,20 +37,12 @@ public class Movie {
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "director_id", nullable = false)
-    private Person director;
-
-    public Movie() {
-
-    }
+    private @Getter Person director;
 
     public Movie(String name, String overview, String releaseDate) {
         this.setName(name);
         this.setOverview(overview);
         this.setReleaseDate(releaseDate);
-    }
-
-    public Date getReleaseDate() {
-        return releaseDate;
     }
 
     public void setReleaseDate(String releaseDate) {
@@ -57,32 +53,12 @@ public class Movie {
         }
     }
 
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setYear(int year) {
         try {
             this.releaseDate = new SimpleDateFormat("yyyy").parse(String.valueOf(year));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public Person getDirector() {
-        return this.director;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.janero.movies.controllers;
 
-import com.janero.movies.model.Person;
+import com.janero.movies.domain.model.Person;
 import com.janero.movies.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
-@RequestMapping(path = "/person")
-public class PersonController {
+@RequestMapping(path = "/actors")
+public class ActorController {
     public static final int DEFAULT_PAGE_SIZE = 10;
 
     @Autowired
     private PersonService personService;
 
-    @GetMapping(name = "/actors")
+    @GetMapping()
     public @ResponseBody Iterable<Person> getActors(@RequestParam(required = false) String name,
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) String overview,

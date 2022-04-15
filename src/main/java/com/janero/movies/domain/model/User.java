@@ -1,4 +1,4 @@
-package com.janero.movies.model;
+package com.janero.movies.domain.model;
 
 import java.util.Collection;
 import javax.persistence.Entity;
@@ -64,7 +64,7 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
