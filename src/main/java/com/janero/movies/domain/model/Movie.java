@@ -24,7 +24,7 @@ public class Movie {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private @Getter Long id;
     private @Getter @Setter String name;
     private @Getter @Setter String overview;
     @Temporal(TemporalType.DATE)
