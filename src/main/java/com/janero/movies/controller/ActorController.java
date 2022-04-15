@@ -1,4 +1,4 @@
-package com.janero.movies.controllers;
+package com.janero.movies.controller;
 
 import com.janero.movies.domain.model.Person;
 import com.janero.movies.service.PersonService;
