@@ -27,9 +27,12 @@ public class Movie {
     private Long id;
     private @Getter @Setter String name;
     private @Getter @Setter String overview;
-
     @Temporal(TemporalType.DATE)
     private @Getter Date releaseDate;
+    private @Getter @Setter boolean adult;
+    private @Getter @Setter int budget;
+    private @Getter @Setter int revenue;
+    private @Getter @Setter int runtime;
 
     @ManyToMany(mappedBy = "moviesAsActor")
     @JsonManagedReference
