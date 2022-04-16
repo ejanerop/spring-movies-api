@@ -4,11 +4,13 @@ Restful API built in Spring Boot that allows users to search for movies and acto
 
 ## Endpoints
 
-The avaliables endpoints are:
-
 ### Authentication
 
+The avaliables endpoints are:
+
 #### `POST /register`
+
+Params:
 
 -   `username`: String
 -   `password`: String
@@ -31,6 +33,8 @@ Response:
 
 #### `POST /login`
 
+Params:
+
 -   `username`: String
 -   `password`: String
 
@@ -45,3 +49,22 @@ Response:
 ```
 
 ### Movies
+
+The avaliables endpoints for movies are:
+
+-   `GET /movies`
+-   `GET /movies/{id}`
+-   `POST /movies`
+-   `PUT /movies/{id}`
+-   `DELETE /movies/{id}`
+
+### Persons
+
+The avaliables endpoints for persons are:
+
+-   `GET /persons/directors`
+-   `GET /persons/actors`
+-   `GET /persons/{id}`
+-   `POST /persons`
+-   `PUT /persons/{id}`
+-   `DELETE /persons/{id}`
