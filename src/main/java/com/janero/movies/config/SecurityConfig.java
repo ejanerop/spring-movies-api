@@ -60,7 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/v3/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll().antMatchers(HttpMethod.GET, "/v3/**")
+                .permitAll()
                 // Private endpoints
                 .anyRequest().authenticated();
 
