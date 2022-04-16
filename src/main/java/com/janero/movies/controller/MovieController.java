@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.NoSuchElementException;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.MovieDTO;
-import com.janero.movies.domain.dto.criteria.MovieCriteria;
+import com.janero.movies.domain.dto.query.MovieQuery;
 import com.janero.movies.domain.dto.request.MovieRequest;
 import com.janero.movies.domain.dto.response.Response;
 import com.janero.movies.domain.dto.response.ResponseMessage;
@@ -26,7 +26,6 @@ import com.janero.movies.domain.model.Constants;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.service.MovieService;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping(path = "/movies")
@@ -38,12 +37,12 @@ public class MovieController {
     private MovieMapper movieMapper;
 
     @GetMapping()
-    public @ResponseBody Iterable<MovieDTO> getMovies(MovieCriteria criteria) {
+    public @ResponseBody Iterable<MovieDTO> getMovies(MovieQuery query) {
 
-        int page = criteria.getPage() == null ? 0 : criteria.getPage();
-        int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
+        int page = query.getPage() == null ? 0 : query.getPage();
+        int size = query.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : query.getSize();
 
-        Movie movie = movieMapper.mapToEntity(criteria);
+        Movie movie = movieMapper.mapToEntity(query);
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -106,7 +105,5 @@ public class MovieController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
         }
     }
-
-
 
 }

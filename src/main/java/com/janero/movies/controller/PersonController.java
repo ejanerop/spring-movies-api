@@ -3,7 +3,7 @@ package com.janero.movies.controller;
 import java.util.NoSuchElementException;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.PersonDTO;
-import com.janero.movies.domain.dto.criteria.PersonCriteria;
+import com.janero.movies.domain.dto.query.PersonQuery;
 import com.janero.movies.domain.dto.request.PersonRequest;
 import com.janero.movies.domain.dto.response.Response;
 import com.janero.movies.domain.dto.response.ResponseMessage;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping(path = "/persons")
 public class PersonController {
@@ -39,12 +38,12 @@ public class PersonController {
     private PersonMapper personMapper;
 
     @GetMapping(value = "/actors")
-    public @ResponseBody Iterable<PersonDTO> getActors(PersonCriteria criteria) {
+    public @ResponseBody Iterable<PersonDTO> getActors(PersonQuery query) {
 
-        int page = criteria.getPage() == null ? 0 : criteria.getPage();
-        int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
+        int page = query.getPage() == null ? 0 : query.getPage();
+        int size = query.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : query.getSize();
 
-        Person person = personMapper.mapToEntity(criteria);
+        Person person = personMapper.mapToEntity(query);
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -54,12 +53,12 @@ public class PersonController {
     }
 
     @GetMapping(value = "/directors")
-    public @ResponseBody Iterable<PersonDTO> getDirectors(PersonCriteria criteria) {
+    public @ResponseBody Iterable<PersonDTO> getDirectors(PersonQuery query) {
 
-        int page = criteria.getPage() == null ? 0 : criteria.getPage();
-        int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
+        int page = query.getPage() == null ? 0 : query.getPage();
+        int size = query.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : query.getSize();
 
-        Person person = personMapper.mapToEntity(criteria);
+        Person person = personMapper.mapToEntity(query);
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -118,8 +117,7 @@ public class PersonController {
             ResponseMessage message = new ResponseMessage(404, e.getMessage(), false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         } catch (DataIntegrityViolationException e) {
-            ResponseMessage message =
-                    new ResponseMessage(422, "Can't delete a director of a movie", false);
+            ResponseMessage message = new ResponseMessage(422, "Can't delete a director of a movie", false);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package com.janero.movies.domain.mapper;
 
 import com.janero.movies.domain.dto.MovieDTO;
-import com.janero.movies.domain.dto.criteria.MovieCriteria;
+import com.janero.movies.domain.dto.query.MovieQuery;
 import com.janero.movies.domain.dto.request.MovieRequest;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.service.PersonService;
@@ -56,15 +56,15 @@ public class MovieMapper implements Mapper<Movie, MovieDTO> {
         return movie;
     }
 
-    public Movie mapToEntity(MovieCriteria criteria) {
+    public Movie mapToEntity(MovieQuery query) {
         Movie movie = new Movie();
-        movie.setName(criteria.getName());
-        movie.setOverview(criteria.getOverview());
-        if (criteria.getYear() != null) {
-            movie.setYear(criteria.getYear());
+        movie.setName(query.getName());
+        movie.setOverview(query.getOverview());
+        if (query.getYear() != null) {
+            movie.setYear(query.getYear());
         }
-        if (criteria.getAdult() != null) {
-            movie.setAdult(criteria.getAdult());
+        if (query.getAdult() != null) {
+            movie.setAdult(query.getAdult());
         }
         return movie;
     }
