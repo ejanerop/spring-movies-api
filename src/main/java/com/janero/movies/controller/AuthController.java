@@ -13,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,24 +34,19 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<Response> login(@RequestBody @Valid AuthRequest request) {
-        try {
-            System.out.println(request.getUsername());
-            System.out.println(request.getPassword());
-            Authentication authenticate =
-                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                            request.getUsername(), request.getPassword()));
+    public ResponseEntity<User> login(@RequestBody @Valid AuthRequest request) {
+        System.out.println(request.getUsername());
+        System.out.println(request.getPassword());
+        Authentication authenticate =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        request.getUsername(), request.getPassword()));
 
 
-            User user = (User) authenticate.getPrincipal();
+        User user = (User) authenticate.getPrincipal();
 
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
-                    .body(user);
-        } catch (BadCredentialsException ex) {
-            ResponseMessage message = new ResponseMessage(401, ex.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
-        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
+                .body(user);
     }
 
     @PostMapping("register")
