@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Data
-public class CreateUserRequest {
+public class CreateUserRequest implements Request {
 
     @NotBlank
     @Email

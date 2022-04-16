@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CreateMovieRequest {
+public class CreateMovieRequest implements Request {
 
     @NotBlank(message = "Name is required")
     private String name;
