@@ -5,7 +5,7 @@ import com.janero.movies.domain.model.Person;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.PersonDTO;
 import com.janero.movies.domain.dto.criteria.PersonCriteria;
-import com.janero.movies.domain.dto.request.CreatePersonRequest;
+import com.janero.movies.domain.dto.request.PersonRequest;
 
 @Service
 public class PersonMapper implements Mapper<Person, PersonDTO> {
@@ -22,7 +22,7 @@ public class PersonMapper implements Mapper<Person, PersonDTO> {
         return personDTO;
     }
 
-    public Person mapToEntity(@Valid CreatePersonRequest request) {
+    public Person mapToEntity(@Valid PersonRequest request) {
         Person person = new Person();
         person.setName(request.getName());
         person.setBiography(request.getBiography());

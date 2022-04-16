@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.MovieDTO;
 import com.janero.movies.domain.dto.criteria.MovieCriteria;
-import com.janero.movies.domain.dto.request.CreateMovieRequest;
+import com.janero.movies.domain.dto.request.MovieRequest;
 import com.janero.movies.domain.dto.response.Response;
 import com.janero.movies.domain.dto.response.ResponseMessage;
 import com.janero.movies.domain.mapper.MovieMapper;
@@ -63,11 +64,26 @@ public class MovieController {
     }
 
     @PostMapping()
-    public ResponseEntity<Response> saveMovie(@RequestBody @Valid CreateMovieRequest request) {
+    public ResponseEntity<Response> saveMovie(@RequestBody @Valid MovieRequest request) {
         try {
             Movie movie = movieMapper.mapToEntity(request);
-            movieService.createMovie(movie);
+            movieService.saveMovie(movie);
             return ResponseEntity.status(HttpStatus.CREATED).body(movieMapper.mapToDTO(movie));
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+        }
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Response> updateMovie(@PathVariable Long id,
+            @RequestBody @Valid MovieRequest request) {
+        try {
+            Movie movie = movieMapper.mapToEntity(request);
+            movie.setId(id);
+            movieService.saveMovie(movie);
+            return ResponseEntity.status(HttpStatus.OK).body(movieMapper.mapToDTO(movie));
         } catch (Exception e) {
             e.printStackTrace();
             ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);

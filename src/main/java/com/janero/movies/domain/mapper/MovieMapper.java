@@ -2,7 +2,7 @@ package com.janero.movies.domain.mapper;
 
 import com.janero.movies.domain.dto.MovieDTO;
 import com.janero.movies.domain.dto.criteria.MovieCriteria;
-import com.janero.movies.domain.dto.request.CreateMovieRequest;
+import com.janero.movies.domain.dto.request.MovieRequest;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class MovieMapper implements Mapper<Movie, MovieDTO> {
         return movieDTO;
     }
 
-    public Movie mapToEntity(@Valid CreateMovieRequest request) throws NoSuchElementException {
+    public Movie mapToEntity(@Valid MovieRequest request) throws NoSuchElementException {
         Movie movie = new Movie();
         movie.setName(request.getName());
         movie.setOverview(request.getOverview());

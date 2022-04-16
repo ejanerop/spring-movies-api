@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.PersonDTO;
 import com.janero.movies.domain.dto.criteria.PersonCriteria;
-import com.janero.movies.domain.dto.request.CreatePersonRequest;
+import com.janero.movies.domain.dto.request.PersonRequest;
 import com.janero.movies.domain.dto.response.Response;
 import com.janero.movies.domain.dto.response.ResponseMessage;
 import com.janero.movies.domain.mapper.PersonMapper;
@@ -80,7 +80,7 @@ public class PersonController {
     }
 
     @PostMapping()
-    public ResponseEntity<Response> savePerson(@RequestBody @Valid CreatePersonRequest request) {
+    public ResponseEntity<Response> savePerson(@RequestBody @Valid PersonRequest request) {
         try {
             Person person = personMapper.mapToEntity(request);
             personService.savePerson(person);
@@ -93,7 +93,7 @@ public class PersonController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Response> updatePerson(@PathVariable Long id,
-            @RequestBody @Valid CreatePersonRequest request) {
+            @RequestBody @Valid PersonRequest request) {
         try {
             Person person = personMapper.mapToEntity(request);
             person.setId(id);

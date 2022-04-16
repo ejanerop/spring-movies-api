@@ -32,7 +32,7 @@ public class MovieService {
                 .orElseThrow(() -> new NoSuchElementException("Movie not found"));
     }
 
-    public Movie createMovie(Movie movie) {
+    public Movie saveMovie(Movie movie) {
         return movieRepository.save(movie);
     }
 
