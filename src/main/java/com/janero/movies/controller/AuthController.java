@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 public class AuthController {
@@ -34,6 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
+    @Operation(summary = "Login user", description = "Get access to the API")
     public ResponseEntity<User> login(@RequestBody @Valid AuthRequest request) {
         System.out.println(request.getUsername());
         System.out.println(request.getPassword());
@@ -50,6 +52,7 @@ public class AuthController {
     }
 
     @PostMapping("register")
+    @Operation(summary = "Register user", description = "Register a new user in the API")
     public ResponseEntity<Response> register(@RequestBody @Valid CreateUserRequest request) {
         try {
             User user = userService.create(request);

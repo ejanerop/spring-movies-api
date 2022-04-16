@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +41,9 @@ public class PersonController {
     private PersonMapper personMapper;
 
     @GetMapping(value = "/actors")
-    public @ResponseBody Iterable<PersonDTO> getActors(PersonQuery query) {
+    @Operation(summary = "List actors",
+            description = "List persons that appears in a movie as actor.")
+    public @ResponseBody Page<PersonDTO> getActors(PersonQuery query) {
 
         int page = query.getPage() == null ? 0 : query.getPage();
         int size = query.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : query.getSize();
@@ -51,11 +54,13 @@ public class PersonController {
 
         Page<Person> entities = personService.getActors(person, pageable);
 
-        return entities.map(personMapper::mapToDTO);
+        return (Page<PersonDTO>) entities.map(personMapper::mapToDTO);
     }
 
     @GetMapping(value = "/directors")
-    public @ResponseBody Iterable<PersonDTO> getDirectors(PersonQuery query) {
+    @Operation(summary = "List directors",
+            description = "List persons that are related to a movie as director.")
+    public @ResponseBody Page<PersonDTO> getDirectors(PersonQuery query) {
 
         int page = query.getPage() == null ? 0 : query.getPage();
         int size = query.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : query.getSize();
@@ -66,16 +71,18 @@ public class PersonController {
 
         Page<Person> entities = personService.getDirectors(person, pageable);
 
-        return entities.map(personMapper::mapToDTO);
+        return (Page<PersonDTO>) entities.map(personMapper::mapToDTO);
     }
 
     @GetMapping(value = "/{id}")
+    @Operation(summary = "Get person", description = "Get a person's information by id.")
     public @ResponseBody ResponseEntity<PersonDTO> getPerson(@PathVariable Long id) {
         PersonDTO personDTO = personMapper.mapToDTO(personService.getPerson(id));
         return ResponseEntity.ok().body(personDTO);
     }
 
     @PostMapping()
+    @Operation(summary = "Add person", description = "Adds a new person.")
     public ResponseEntity<PersonDTO> savePerson(@RequestBody @Valid PersonRequest request) {
         Person person = personMapper.mapToEntity(request);
         personService.savePerson(person);
@@ -83,6 +90,7 @@ public class PersonController {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Update person", description = "Update person's information by id.")
     public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
             @RequestBody @Valid PersonRequest request) {
         Person person = personMapper.mapToEntity(request);
@@ -92,6 +100,7 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Delete person", description = "Deletes a person by id.")
     public ResponseEntity<ResponseMessage> deletePerson(@PathVariable Long id) {
         personService.deletePerson(personService.getPerson(id));
         return ResponseEntity.status(HttpStatus.OK)

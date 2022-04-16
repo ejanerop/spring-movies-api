@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.NoSuchElementException;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.MovieDTO;
@@ -39,7 +40,8 @@ public class MovieController {
     private MovieMapper movieMapper;
 
     @GetMapping()
-    public @ResponseBody Iterable<MovieDTO> getMovies(MovieQuery query) {
+    @Operation(summary = "List movies", description = "Lists all movies paginated")
+    public @ResponseBody Page<MovieDTO> getMovies(MovieQuery query) {
 
         int page = query.getPage() == null ? 0 : query.getPage();
         int size = query.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : query.getSize();
@@ -50,16 +52,18 @@ public class MovieController {
 
         Page<Movie> entities = movieService.getMovies(movie, pageable);
 
-        return entities.map(movieMapper::mapToDTO);
+        return (Page<MovieDTO>) entities.map(movieMapper::mapToDTO);
     }
 
     @GetMapping(value = "/{id}")
+    @Operation(summary = "Get movie", description = "Gets a movie information by id")
     public @ResponseBody ResponseEntity<MovieDTO> getMovie(@PathVariable Long id) {
         MovieDTO movieDTO = movieMapper.mapToDTO(movieService.getMovie(id));
         return ResponseEntity.ok().body(movieDTO);
     }
 
     @PostMapping()
+    @Operation(summary = "Add movie", description = "Adds a new movie")
     public ResponseEntity<MovieDTO> saveMovie(@RequestBody @Valid MovieRequest request) {
         Movie movie = movieMapper.mapToEntity(request);
         movieService.saveMovie(movie);
@@ -67,6 +71,7 @@ public class MovieController {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Update movie", description = "Updates a movie information by id")
     public ResponseEntity<MovieDTO> updateMovie(@PathVariable Long id,
             @RequestBody @Valid MovieRequest request) {
         Movie movie = movieMapper.mapToEntity(request);
@@ -76,6 +81,7 @@ public class MovieController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Delete movie", description = "Deletes a movie by id")
     public ResponseEntity<ResponseMessage> deleteMovie(@PathVariable Long id) {
         movieService.deleteMovie(movieService.getMovie(id));
         return ResponseEntity.status(HttpStatus.OK)
