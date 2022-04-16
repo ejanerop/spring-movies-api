@@ -7,19 +7,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import java.util.NoSuchElementException;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.MovieDTO;
 import com.janero.movies.domain.dto.query.MovieQuery;
 import com.janero.movies.domain.dto.request.MovieRequest;
-import com.janero.movies.domain.dto.response.Response;
 import com.janero.movies.domain.dto.response.ResponseMessage;
 import com.janero.movies.domain.mapper.MovieMapper;
 import com.janero.movies.domain.model.Constants;
@@ -52,58 +54,51 @@ public class MovieController {
     }
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody ResponseEntity<Response> getMovie(@PathVariable Long id) {
-        try {
-            MovieDTO movieDTO = movieMapper.mapToDTO(movieService.getMovie(id));
-            return ResponseEntity.ok().body(movieDTO);
-        } catch (NoSuchElementException e) {
-            ResponseMessage message = new ResponseMessage(404, "Movie not found", false);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
+    public @ResponseBody ResponseEntity<MovieDTO> getMovie(@PathVariable Long id) {
+        MovieDTO movieDTO = movieMapper.mapToDTO(movieService.getMovie(id));
+        return ResponseEntity.ok().body(movieDTO);
     }
 
     @PostMapping()
-    public ResponseEntity<Response> saveMovie(@RequestBody @Valid MovieRequest request) {
-        try {
-            Movie movie = movieMapper.mapToEntity(request);
-            movieService.saveMovie(movie);
-            return ResponseEntity.status(HttpStatus.CREATED).body(movieMapper.mapToDTO(movie));
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
-        }
+    public ResponseEntity<MovieDTO> saveMovie(@RequestBody @Valid MovieRequest request) {
+        Movie movie = movieMapper.mapToEntity(request);
+        movieService.saveMovie(movie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(movieMapper.mapToDTO(movie));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Response> updateMovie(@PathVariable Long id,
+    public ResponseEntity<MovieDTO> updateMovie(@PathVariable Long id,
             @RequestBody @Valid MovieRequest request) {
-        try {
-            Movie movie = movieMapper.mapToEntity(request);
-            movie.setId(id);
-            movieService.saveMovie(movie);
-            return ResponseEntity.status(HttpStatus.OK).body(movieMapper.mapToDTO(movie));
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
-        }
+        Movie movie = movieMapper.mapToEntity(request);
+        movie.setId(id);
+        movieService.saveMovie(movie);
+        return ResponseEntity.status(HttpStatus.OK).body(movieMapper.mapToDTO(movie));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Response> deleteMovie(@PathVariable Long id) {
-        try {
-            movieService.deleteMovie(movieService.getMovie(id));
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseMessage(204, "Movie deleted", true));
-        } catch (NoSuchElementException e) {
-            ResponseMessage message = new ResponseMessage(404, "Movie not found", false);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
-        }
+    public ResponseEntity<ResponseMessage> deleteMovie(@PathVariable Long id) {
+        movieService.deleteMovie(movieService.getMovie(id));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseMessage(204, "Movie deleted", true));
     }
 
+
+    // ----------------------------------------------------------------------------------
+    // Exception handlers
+    // ----------------------------------------------------------------------------------
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ResponseMessage> handleNotFound() {
+        ResponseMessage message = new ResponseMessage(404, "Movie not found!", false);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+
+    @ExceptionHandler(BadRequest.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<ResponseMessage> handleBadRequest(BadRequest e) {
+        e.printStackTrace();
+        ResponseMessage message = new ResponseMessage(422, "Bad Request!", false);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+    }
 }

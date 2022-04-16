@@ -29,7 +29,7 @@ public class MovieService {
 
     public Movie getMovie(Long id) {
         return movieRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Movie not found"));
+                .orElseThrow(() -> new NoSuchElementException("Movie not found!"));
     }
 
     public Movie saveMovie(Movie movie) {
