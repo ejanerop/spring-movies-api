@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,6 +68,22 @@ public class MovieController {
             Movie movie = movieMapper.mapToEntity(request);
             movieService.createMovie(movie);
             return ResponseEntity.status(HttpStatus.CREATED).body(movieMapper.mapToDTO(movie));
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Response> deleteMovie(@PathVariable Long id) {
+        try {
+            movieService.deleteMovie(movieService.getMovie(id));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseMessage(204, "Movie deleted", true));
+        } catch (NoSuchElementException e) {
+            ResponseMessage message = new ResponseMessage(404, "Movie not found", false);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         } catch (Exception e) {
             e.printStackTrace();
             ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);

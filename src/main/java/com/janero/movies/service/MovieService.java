@@ -57,5 +57,9 @@ public class MovieService {
             return builder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
     }
+
+    public void deleteMovie(Movie movie) {
+        movieRepository.delete(movie);
+    }
 }
 
