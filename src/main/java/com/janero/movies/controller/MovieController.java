@@ -41,16 +41,7 @@ public class MovieController {
         int page = criteria.getPage() == null ? 0 : criteria.getPage();
         int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
 
-        // TODO: with Mapper
-        Movie movie = new Movie();
-        movie.setName(criteria.getName());
-        movie.setOverview(criteria.getOverview());
-        if (criteria.getYear() != null) {
-            movie.setYear(criteria.getYear());
-        }
-        if (criteria.getAdult() != null) {
-            movie.setAdult(criteria.getAdult());
-        }
+        Movie movie = movieMapper.mapToEntity(criteria);
 
         Pageable pageable = PageRequest.of(page, size);
 

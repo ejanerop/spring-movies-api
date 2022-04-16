@@ -41,12 +41,7 @@ public class PersonController {
         int page = criteria.getPage() == null ? 0 : criteria.getPage();
         int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
 
-        Person person = new Person();
-        person.setName(criteria.getName());
-        person.setBiography(criteria.getBiography());
-        if (criteria.getAdult() != null) {
-            person.setAdult(criteria.getAdult());
-        }
+        Person person = personMapper.mapToEntity(criteria);
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -61,12 +56,7 @@ public class PersonController {
         int page = criteria.getPage() == null ? 0 : criteria.getPage();
         int size = criteria.getSize() == null ? Constants.DEFAULT_PAGE_SIZE : criteria.getSize();
 
-        Person person = new Person();
-        person.setName(criteria.getName());
-        person.setBiography(criteria.getBiography());
-        if (criteria.getAdult() != null) {
-            person.setAdult(criteria.getAdult());
-        }
+        Person person = personMapper.mapToEntity(criteria);
 
         Pageable pageable = PageRequest.of(page, size);
 

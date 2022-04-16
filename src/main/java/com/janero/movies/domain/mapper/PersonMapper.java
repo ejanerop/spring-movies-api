@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import com.janero.movies.domain.model.Person;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.PersonDTO;
+import com.janero.movies.domain.dto.criteria.PersonCriteria;
 import com.janero.movies.domain.dto.request.CreatePersonRequest;
 
 @Service
@@ -29,6 +30,16 @@ public class PersonMapper implements Mapper<Person, PersonDTO> {
         person.setDeathday(request.getDeathday());
         person.setPlaceOfBirth(request.getPlaceOfBirth());
         person.setAdult(request.getAdult());
+        return person;
+    }
+
+    public Person mapToEntity(PersonCriteria criteria) {
+        Person person = new Person();
+        person.setName(criteria.getName());
+        person.setBiography(criteria.getBiography());
+        if (criteria.getAdult() != null) {
+            person.setAdult(criteria.getAdult());
+        }
         return person;
     }
 
