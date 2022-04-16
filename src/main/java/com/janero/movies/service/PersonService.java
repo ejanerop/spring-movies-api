@@ -34,7 +34,7 @@ public class PersonService {
                 .orElseThrow(() -> new NoSuchElementException("Person not found"));
     }
 
-    public Person createPerson(Person person) {
+    public Person savePerson(Person person) {
         return personRepository.save(person);
     }
 

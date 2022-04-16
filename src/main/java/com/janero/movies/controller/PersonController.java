@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -82,11 +83,28 @@ public class PersonController {
     public ResponseEntity<Response> savePerson(@RequestBody @Valid CreatePersonRequest request) {
         try {
             Person person = personMapper.mapToEntity(request);
-            personService.createPerson(person);
+            personService.savePerson(person);
             return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.mapToDTO(person));
         } catch (Exception e) {
             ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+        }
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Response> updatePerson(@PathVariable Long id,
+            @RequestBody @Valid CreatePersonRequest request) {
+        try {
+            Person person = personMapper.mapToEntity(request);
+            person.setId(id);
+            personService.savePerson(person);
+            return ResponseEntity.status(HttpStatus.OK).body(personMapper.mapToDTO(person));
+        } catch (DataIntegrityViolationException e) {
+            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+        } catch (NoSuchElementException e) {
+            ResponseMessage message = new ResponseMessage(404, e.getMessage(), false);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
     }
 

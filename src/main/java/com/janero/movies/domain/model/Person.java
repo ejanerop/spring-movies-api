@@ -18,7 +18,7 @@ public class Person {
 
     @Id
     @GeneratedValue
-    private @Getter Long id;
+    private @Getter @Setter Long id;
     private @Getter @Setter String name;
     private @Getter @Setter String biography;
 
