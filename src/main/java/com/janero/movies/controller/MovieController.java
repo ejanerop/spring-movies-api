@@ -96,8 +96,7 @@ public class MovieController {
 
     @ExceptionHandler(BadRequest.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<ResponseMessage> handleBadRequest(BadRequest e) {
-        e.printStackTrace();
+    public ResponseEntity<ResponseMessage> handleBadRequest() {
         ResponseMessage message = new ResponseMessage(422, "Bad Request!", false);
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
     }

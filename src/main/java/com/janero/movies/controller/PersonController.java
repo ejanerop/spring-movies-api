@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import com.janero.movies.domain.dto.PersonDTO;
 import com.janero.movies.domain.dto.query.PersonQuery;
 import com.janero.movies.domain.dto.request.PersonRequest;
-import com.janero.movies.domain.dto.response.Response;
 import com.janero.movies.domain.dto.response.ResponseMessage;
 import com.janero.movies.domain.mapper.PersonMapper;
 import com.janero.movies.domain.model.Constants;
@@ -19,11 +18,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,62 +70,59 @@ public class PersonController {
     }
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody ResponseEntity<Response> getPerson(@PathVariable Long id) {
-        try {
-            PersonDTO personDTO = personMapper.mapToDTO(personService.getPerson(id));
-            return ResponseEntity.ok().body(personDTO);
-        } catch (NoSuchElementException e) {
-            ResponseMessage message = new ResponseMessage(404, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
+    public @ResponseBody ResponseEntity<PersonDTO> getPerson(@PathVariable Long id) {
+        PersonDTO personDTO = personMapper.mapToDTO(personService.getPerson(id));
+        return ResponseEntity.ok().body(personDTO);
     }
 
     @PostMapping()
-    public ResponseEntity<Response> savePerson(@RequestBody @Valid PersonRequest request) {
-        try {
-            Person person = personMapper.mapToEntity(request);
-            personService.savePerson(person);
-            return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.mapToDTO(person));
-        } catch (Exception e) {
-            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
-        }
+    public ResponseEntity<PersonDTO> savePerson(@RequestBody @Valid PersonRequest request) {
+        Person person = personMapper.mapToEntity(request);
+        personService.savePerson(person);
+        return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.mapToDTO(person));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Response> updatePerson(@PathVariable Long id,
+    public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
             @RequestBody @Valid PersonRequest request) {
-        try {
-            Person person = personMapper.mapToEntity(request);
-            person.setId(id);
-            personService.savePerson(person);
-            return ResponseEntity.status(HttpStatus.OK).body(personMapper.mapToDTO(person));
-        } catch (DataIntegrityViolationException e) {
-            ResponseMessage message = new ResponseMessage(422, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
-        } catch (NoSuchElementException e) {
-            ResponseMessage message = new ResponseMessage(404, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
+        Person person = personMapper.mapToEntity(request);
+        person.setId(id);
+        personService.savePerson(person);
+        return ResponseEntity.status(HttpStatus.OK).body(personMapper.mapToDTO(person));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Response> deletePerson(@PathVariable Long id) {
-        try {
-            personService.deletePerson(personService.getPerson(id));
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseMessage(200, "Person deleted", true));
-        } catch (NoSuchElementException e) {
-            ResponseMessage message = new ResponseMessage(404, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        } catch (DataIntegrityViolationException e) {
-            ResponseMessage message = new ResponseMessage(422, "Can't delete a director of a movie", false);
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseMessage message = new ResponseMessage(500, e.getMessage(), false);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
+    public ResponseEntity<ResponseMessage> deletePerson(@PathVariable Long id) {
+        personService.deletePerson(personService.getPerson(id));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseMessage(200, "Person deleted", true));
     }
+
+    // ----------------------------------------------------------------------------------
+    // Exception handlers
+    // ----------------------------------------------------------------------------------
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ResponseMessage> handleNotFound() {
+        ResponseMessage message = new ResponseMessage(404, "Person not found!", false);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<ResponseMessage> handleDataIntegrity() {
+        ResponseMessage message =
+                new ResponseMessage(422, "Can't delete a director of a movie", false);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+    }
+
+    @ExceptionHandler(BadRequest.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<ResponseMessage> handleBadRequest() {
+        ResponseMessage message = new ResponseMessage(422, "Bad Request!", false);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(message);
+    }
+
 
 }
