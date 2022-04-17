@@ -18,7 +18,7 @@ public class User implements UserDetails, Response {
 
     @Id
     @GeneratedValue
-    private @Getter Long id;
+    private @Getter @Setter Long id;
     private @Getter @Setter String username;
     private @Getter @Setter String password;
 
