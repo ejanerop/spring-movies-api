@@ -13,6 +13,9 @@ public class PersonMapper implements Mapper<Person, PersonDTO> {
     @Override
     public PersonDTO mapToDTO(Person user) {
         PersonDTO personDTO = new PersonDTO();
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("Person id cannot be null");
+        }
         personDTO.setId(user.getId());
         personDTO.setName(user.getName());
         personDTO.setBiography(user.getBiography());
@@ -43,10 +46,10 @@ public class PersonMapper implements Mapper<Person, PersonDTO> {
         return person;
     }
 
-    public PersonDTO mapToMoviePersonDTO(Person user) {
+    public PersonDTO mapToMoviePersonDTO(Person person) {
         PersonDTO personDTO = new PersonDTO();
-        personDTO.setId(user.getId());
-        personDTO.setName(user.getName());
+        personDTO.setId(person.getId());
+        personDTO.setName(person.getName());
         return personDTO;
     }
 }
