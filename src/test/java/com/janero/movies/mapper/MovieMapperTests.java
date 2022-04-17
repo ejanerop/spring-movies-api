@@ -103,7 +103,7 @@ public class MovieMapperTests {
         assertAll(() -> {
             assertEquals(query.getName(), movie.getName());
             assertEquals(query.getOverview(), movie.getOverview());
-            assertEquals(query.getYear(), movie.getReleaseDate().getYear());
+            assertEquals(query.getYear(), movie.getReleaseDate().getYear() + 1900);
             assertEquals(query.getAdult(), movie.getAdult());
         });
     }
