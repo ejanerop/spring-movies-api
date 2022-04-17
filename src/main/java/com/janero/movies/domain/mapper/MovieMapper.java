@@ -1,8 +1,8 @@
 package com.janero.movies.domain.mapper;
 
 import com.janero.movies.domain.dto.MovieDTO;
-import com.janero.movies.domain.dto.query.MovieQuery;
-import com.janero.movies.domain.dto.request.MovieRequest;
+import com.janero.movies.domain.query.MovieQuery;
+import com.janero.movies.domain.request.MovieRequest;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;

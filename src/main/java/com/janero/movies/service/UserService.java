@@ -3,7 +3,7 @@ package com.janero.movies.service;
 import java.util.HashSet;
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
-import com.janero.movies.domain.dto.request.CreateUserRequest;
+import com.janero.movies.domain.request.CreateUserRequest;
 import com.janero.movies.domain.model.User;
 import com.janero.movies.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;

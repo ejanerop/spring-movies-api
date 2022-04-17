@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import com.janero.movies.domain.model.Person;
 import javax.validation.Valid;
 import com.janero.movies.domain.dto.PersonDTO;
-import com.janero.movies.domain.dto.query.PersonQuery;
-import com.janero.movies.domain.dto.request.PersonRequest;
+import com.janero.movies.domain.query.PersonQuery;
+import com.janero.movies.domain.request.PersonRequest;
 
 @Service
 public class PersonMapper implements Mapper<Person, PersonDTO> {

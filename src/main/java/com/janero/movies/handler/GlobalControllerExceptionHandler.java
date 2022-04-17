@@ -1,6 +1,6 @@
 package com.janero.movies.handler;
 
-import com.janero.movies.domain.dto.response.ResponseMessage;
+import com.janero.movies.domain.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

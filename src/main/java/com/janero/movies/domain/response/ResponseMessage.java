@@ -1,4 +1,4 @@
-package com.janero.movies.domain.dto.response;
+package com.janero.movies.domain.response;
 
 import lombok.Data;
 

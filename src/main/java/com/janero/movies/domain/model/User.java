@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.janero.movies.domain.dto.response.Response;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-public class User implements UserDetails, Response {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue

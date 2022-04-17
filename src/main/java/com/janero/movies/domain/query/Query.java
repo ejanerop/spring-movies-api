@@ -1,4 +1,4 @@
-package com.janero.movies.domain.dto.query;
+package com.janero.movies.domain.query;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
