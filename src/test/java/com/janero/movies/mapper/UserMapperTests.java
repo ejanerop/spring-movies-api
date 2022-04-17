@@ -1,5 +1,6 @@
 package com.janero.movies.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.janero.movies.domain.dto.UserDTO;
@@ -30,8 +31,10 @@ public class UserMapperTests {
 
         UserDTO userDTO = this.userMapper.mapToDTO(user);
 
-        assertEquals(user.getId(), userDTO.getId());
-        assertEquals(user.getUsername(), userDTO.getUsername());
+        assertAll(() -> {
+            assertEquals(user.getId(), userDTO.getId());
+            assertEquals(user.getUsername(), userDTO.getUsername());
+        });
     }
 
 }

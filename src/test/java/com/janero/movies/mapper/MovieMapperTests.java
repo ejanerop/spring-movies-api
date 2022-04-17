@@ -1,5 +1,6 @@
 package com.janero.movies.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Date;
@@ -50,15 +51,18 @@ public class MovieMapperTests {
 
         MovieDTO movieDTO = this.movieMapper.mapToDTO(movie);
 
-        assertEquals(movie.getId(), movieDTO.getId());
-        assertEquals(movie.getName(), movieDTO.getName());
-        assertEquals(movie.getOverview(), movieDTO.getOverview());
-        assertEquals(movie.getReleaseDate(), movieDTO.getReleaseDate());
-        assertEquals(movie.getAdult(), movieDTO.getAdult());
-        assertEquals(movie.getBudget(), movieDTO.getBudget());
-        assertEquals(movie.getRevenue(), movieDTO.getRevenue());
-        assertEquals(movie.getRuntime(), movieDTO.getRuntime());
-        assertEquals(movie.getDirector().getId(), movieDTO.getDirector().getId());
+        assertAll(() -> {
+            assertEquals(movie.getId(), movieDTO.getId());
+            assertEquals(movie.getName(), movieDTO.getName());
+            assertEquals(movie.getOverview(), movieDTO.getOverview());
+            assertEquals(movie.getReleaseDate(), movieDTO.getReleaseDate());
+            assertEquals(movie.getAdult(), movieDTO.getAdult());
+            assertEquals(movie.getBudget(), movieDTO.getBudget());
+            assertEquals(movie.getRevenue(), movieDTO.getRevenue());
+            assertEquals(movie.getRuntime(), movieDTO.getRuntime());
+            assertEquals(movie.getDirector().getId(), movieDTO.getDirector().getId());
+        });
+
     }
 
     @Test
@@ -96,10 +100,12 @@ public class MovieMapperTests {
 
         Movie movie = movieMapper.mapToEntity(query);
 
-        assertEquals(query.getName(), movie.getName());
-        assertEquals(query.getOverview(), movie.getOverview());
-        assertEquals(query.getYear(), movie.getYear() + 1900);
-        assertEquals(query.getAdult(), movie.getAdult());
+        assertAll(() -> {
+            assertEquals(query.getName(), movie.getName());
+            assertEquals(query.getOverview(), movie.getOverview());
+            assertEquals(query.getYear(), movie.getReleaseDate().getYear());
+            assertEquals(query.getAdult(), movie.getAdult());
+        });
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.janero.movies.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Date;
@@ -45,11 +46,14 @@ public class PersonMapperTests {
 
         PersonDTO personDTO = personMapper.mapToDTO(person);
 
-        assertEquals(person.getId(), personDTO.getId());
-        assertEquals(person.getName(), personDTO.getName());
-        assertEquals(person.getBiography(), personDTO.getBiography());
-        assertEquals(person.getBirthday(), personDTO.getBirthday());
-        assertEquals(person.getPlaceOfBirth(), personDTO.getPlaceOfBirth());
+        assertAll(() -> {
+            assertEquals(person.getId(), personDTO.getId());
+            assertEquals(person.getName(), personDTO.getName());
+            assertEquals(person.getBiography(), personDTO.getBiography());
+            assertEquals(person.getBirthday(), personDTO.getBirthday());
+            assertEquals(person.getPlaceOfBirth(), personDTO.getPlaceOfBirth());
+            assertEquals(person.getAdult(), personDTO.getAdult());
+        });
     }
 
     @Test
@@ -72,12 +76,14 @@ public class PersonMapperTests {
 
         Person person = personMapper.mapToEntity(request);
 
-        assertEquals(request.getName(), person.getName());
-        assertEquals(request.getBiography(), person.getBiography());
-        assertEquals(request.getBirthday(), person.getBirthday());
-        assertEquals(request.getDeathday(), person.getDeathday());
-        assertEquals(request.getPlaceOfBirth(), person.getPlaceOfBirth());
-        assertEquals(request.getAdult(), person.getAdult());
+        assertAll(() -> {
+            assertEquals(request.getName(), person.getName());
+            assertEquals(request.getBiography(), person.getBiography());
+            assertEquals(request.getBirthday(), person.getBirthday());
+            assertEquals(request.getDeathday(), person.getDeathday());
+            assertEquals(request.getPlaceOfBirth(), person.getPlaceOfBirth());
+            assertEquals(request.getAdult(), person.getAdult());
+        });
     }
 
     @Test
@@ -97,9 +103,10 @@ public class PersonMapperTests {
 
         Person person = personMapper.mapToEntity(query);
 
-        assertEquals(query.getName(), person.getName());
-        assertEquals(query.getBiography(), person.getBiography());
-        assertEquals(query.getAdult(), person.getAdult());
-
+        assertAll(() -> {
+            assertEquals(query.getName(), person.getName());
+            assertEquals(query.getBiography(), person.getBiography());
+            assertEquals(query.getAdult(), person.getAdult());
+        });
     }
 }
