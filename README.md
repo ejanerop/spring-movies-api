@@ -65,21 +65,6 @@ RESPONSE: HTTP 201
 }
 ```
 
-Response:
-
-```
-{
-  "id": 0,
-  "username": String,
-  "password": String,
-  "authorities": [
-    {
-      "authority": String
-    }
-  ]
-}
-```
-
 #### Login
 
 ```
