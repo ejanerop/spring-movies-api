@@ -34,6 +34,16 @@ To access the documentation, go to http://localhost:8080/swagger-ui/index.html (
 
 ## Project Setup with Docker
 
+Create a `.env` file with the following environment variables:
+
+```
+MYSQLDB_ROOT_PASSWORD={DB password}
+MYSQLDB_DATABASE={DB name}
+MYSQLDB_LOCAL_PORT={DB port}
+MYSQLDB_DOCKER_PORT={Docker DB port}
+MYSQLDB_USER={DB username}
+```
+
 Run the project with docker:
 
 ```
