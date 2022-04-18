@@ -38,6 +38,30 @@ The avaliables endpoints are:
 
 #### `POST /register`
 
+```
+POST /register
+Accept: application/json
+Content-Type: application/json
+Body:
+{
+  "username": String,
+  "password": String,
+  "rePassword": String,
+}
+
+RESPONSE: HTTP 201
+{
+  "id": 0,
+  "username": String,
+  "password": String,
+  "authorities": [
+    {
+      "authority": String
+    }
+  ]
+}
+```
+
 Params:
 
 -   `username`: String
@@ -49,30 +73,33 @@ Response:
 ```
 {
   "id": 0,
-  "username": "string",
-  "password": "string",
+  "username": String,
+  "password": String,
   "authorities": [
     {
-      "authority": "string"
+      "authority": String
     }
   ]
 }
 ```
 
-#### `POST /login`
-
-Params:
-
--   `username`: String
--   `password`: String
-
-Response:
+#### Login
 
 ```
+POST /login
+Accept: application/json
+Content-Type: application/json
+Body:
 {
-  "id": 0,
   "username": "string",
-  "token": "string",
+  "password": "string",
+}
+
+RESPONSE: HTTP 200
+{
+  "id": Long,
+  "name": String,
+  "token": String,
 }
 ```
 

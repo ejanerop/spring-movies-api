@@ -23,7 +23,6 @@ public class MovieService {
     MovieRepository movieRepository;
 
     public Page<Movie> getMovies(Movie movie, Pageable pageable) {
-
         return movieRepository.findAll(getMoviesFromYearAndExample(movie), pageable);
     }
 

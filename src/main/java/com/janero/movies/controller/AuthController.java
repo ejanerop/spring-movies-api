@@ -64,7 +64,7 @@ public class AuthController {
     @Operation(summary = "Register user", description = "Register a new user in the API")
     public ResponseEntity<User> register(@RequestBody @Valid CreateUserRequest request) {
         User user = userService.create(request);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
 
