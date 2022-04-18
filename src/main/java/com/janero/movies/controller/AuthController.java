@@ -2,7 +2,6 @@ package com.janero.movies.controller;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
-import com.janero.movies.config.JwtTokenUtil;
 import com.janero.movies.domain.dto.UserDTO;
 import com.janero.movies.domain.request.AuthRequest;
 import com.janero.movies.domain.request.CreateUserRequest;
@@ -10,6 +9,7 @@ import com.janero.movies.domain.response.ResponseMessage;
 import com.janero.movies.domain.mapper.UserMapper;
 import com.janero.movies.domain.model.User;
 import com.janero.movies.service.UserService;
+import com.janero.movies.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

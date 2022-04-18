@@ -1,4 +1,4 @@
-package com.janero.movies.config;
+package com.janero.movies.util;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

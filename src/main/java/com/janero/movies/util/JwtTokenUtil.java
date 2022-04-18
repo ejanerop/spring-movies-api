@@ -1,4 +1,4 @@
-package com.janero.movies.config;
+package com.janero.movies.util;
 
 import static java.lang.String.format;
 import java.util.Date;

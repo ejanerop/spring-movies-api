@@ -3,6 +3,7 @@ package com.janero.movies.config;
 import static java.lang.String.format;
 import javax.servlet.http.HttpServletResponse;
 import com.janero.movies.repository.UserRepository;
+import com.janero.movies.util.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
