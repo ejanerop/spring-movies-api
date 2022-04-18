@@ -40,13 +40,11 @@ Run the project with docker:
 docker-compose up -d
 ```
 
-## Endpoints
-
-### Authentication
+## Authentication
 
 The avaliables endpoints are:
 
-#### `POST /register`
+#### Register a user
 
 ```
 POST /register
@@ -61,14 +59,9 @@ Body:
 
 RESPONSE: HTTP 201
 {
-  "id": 0,
-  "username": String,
-  "password": String,
-  "authorities": [
-    {
-      "authority": String
-    }
-  ]
+  "status: String,
+  "message": String,
+  'ok": Boolean
 }
 ```
 
@@ -106,6 +99,10 @@ RESPONSE: HTTP 200
   "token": String,
 }
 ```
+
+## Endpoints
+
+To have access to the API, you need to be authenticated. To do so, you must first create a user using the [Register endpoint](#authentication). Then, send a POST request to the `/login` endpoint. The response will contain a token that you need to send in the `Authorization` header of all your requests: `Bearer <token>`. The token will expire in 24 hours.
 
 ### Movies
 

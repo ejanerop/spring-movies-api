@@ -20,8 +20,8 @@ public class JwtTokenUtil {
     public String generateAccessToken(User user) {
         return Jwts.builder().setSubject(format("%s,%s", user.getId(), user.getUsername()))
                 .setIssuer(jwtIssuer).setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)) // 1
-                                                                                               // week
+                .setExpiration(new Date(System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000)) // 1
+                                                                                               // day
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 

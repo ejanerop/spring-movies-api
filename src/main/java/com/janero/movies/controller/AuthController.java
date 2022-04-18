@@ -62,9 +62,10 @@ public class AuthController {
 
     @PostMapping("register")
     @Operation(summary = "Register user", description = "Register a new user in the API")
-    public ResponseEntity<User> register(@RequestBody @Valid CreateUserRequest request) {
-        User user = userService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    public ResponseEntity<ResponseMessage> register(@RequestBody @Valid CreateUserRequest request) {
+        userService.create(request);
+        ResponseMessage message = new ResponseMessage(201, "User registered successfully!", true);
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
 

@@ -19,6 +19,7 @@ public class User implements UserDetails {
     @GeneratedValue
     private @Getter @Setter Long id;
     private @Getter @Setter String username;
+    @JsonIgnore
     private @Getter @Setter String password;
 
     public User(String username, String password) {
@@ -27,6 +28,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
