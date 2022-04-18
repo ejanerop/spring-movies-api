@@ -2,6 +2,34 @@
 
 Restful API built in Spring Boot that allows users to search for movies and actors. It also allows users to add movies and actors to the database.
 
+## Project Setup
+
+Clone the repo:
+
+```
+git clone https://github.com/ejanerop/spring-movies-api.git
+```
+
+Configure the application.properties with your database credentials.
+
+```
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+```
+
+Build the project and run the tests:
+
+```
+mvn clean package
+```
+
+Run the project:
+
+```
+ mvn spring-boot:run
+```
+
 ## Endpoints
 
 ### Authentication
