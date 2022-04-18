@@ -30,6 +30,8 @@ Run the project:
  mvn spring-boot:run
 ```
 
+To access the documentation, go to http://localhost:8080/swagger-ui/index.html (or http://localhost:8080/ , you will be redirected to the documentation).
+
 ## Endpoints
 
 ### Authentication
@@ -61,12 +63,6 @@ RESPONSE: HTTP 201
   ]
 }
 ```
-
-Params:
-
--   `username`: String
--   `password`: String
--   `rePassword`: String
 
 Response:
 
