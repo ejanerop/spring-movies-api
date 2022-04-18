@@ -31,7 +31,7 @@ public class PersonService {
 
     public Person getPerson(Long id) {
         return personRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Person not found"));
+                .orElseThrow(() -> new NoSuchElementException("Person not found!"));
     }
 
     public Person savePerson(Person person) {

@@ -34,7 +34,7 @@ public class Movie {
     private @Getter @Setter int revenue;
     private @Getter @Setter int runtime;
 
-    @ManyToMany(mappedBy = "moviesAsActor")
+    @ManyToMany
     @JsonManagedReference
     private @Getter @Setter Set<Person> actors;
 

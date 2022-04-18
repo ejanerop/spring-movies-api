@@ -33,7 +33,7 @@ public class Person {
     @JsonBackReference
     private Set<Movie> moviesAsDirector;
 
-    @ManyToMany()
+    @ManyToMany(mappedBy = "actors")
     @JsonBackReference
     private Set<Movie> moviesAsActor;
 
