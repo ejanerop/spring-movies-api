@@ -38,10 +38,4 @@ public class MovieEndpointsTests {
         this.mockMvc.perform(get("/movies")).andDo(print()).andExpect(status().isOk());
     }
 
-    @Test
-    @WithMockUser()
-    public void testGetMovieEndpointAuth() throws Exception {
-
-        this.mockMvc.perform(get("/movies/1")).andDo(print()).andExpect(status().isOk());
-    }
 }

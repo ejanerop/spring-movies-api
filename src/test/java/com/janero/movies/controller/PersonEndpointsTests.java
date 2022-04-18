@@ -101,10 +101,6 @@ public class PersonEndpointsTests {
         this.mockMvc.perform(get("/persons/directors")).andDo(print()).andExpect(status().isOk());
     }
 
-    @Test
-    @WithMockUser()
-    public void testGetPersonAuth() throws Exception {
-        this.mockMvc.perform(get("/persons/1")).andDo(print()).andExpect(status().isOk());
-    }
+
 
 }
