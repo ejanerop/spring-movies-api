@@ -13,9 +13,9 @@ git clone https://github.com/ejanerop/spring-movies-api.git
 Configure the application.properties with your database credentials.
 
 ```
-spring.datasource.url=
-spring.datasource.username=
-spring.datasource.password=
+spring.datasource.url={DB url}
+spring.datasource.username={DB username}
+spring.datasource.password={DB password}
 ```
 
 Build the project and run the tests:
@@ -31,6 +31,14 @@ Run the project:
 ```
 
 To access the documentation, go to http://localhost:8080/swagger-ui/index.html (or http://localhost:8080/ , you will be redirected to the documentation).
+
+## Project Setup with Docker
+
+Run the project with docker:
+
+```
+docker-compose up -d
+```
 
 ## Endpoints
 
