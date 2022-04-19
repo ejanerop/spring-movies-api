@@ -95,8 +95,8 @@ public class MovieController {
 
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ResponseMessage> handleNotFound() {
-        ResponseMessage message = new ResponseMessage(404, "Movie not found!", false);
+    public ResponseEntity<ResponseMessage> handleNotFound(NoSuchElementException e) {
+        ResponseMessage message = new ResponseMessage(404, e.getMessage(), false);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 

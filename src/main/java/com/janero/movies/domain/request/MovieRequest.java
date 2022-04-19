@@ -1,6 +1,6 @@
 package com.janero.movies.domain.request;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
