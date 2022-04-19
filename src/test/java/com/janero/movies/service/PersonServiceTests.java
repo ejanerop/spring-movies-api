@@ -1,6 +1,5 @@
 package com.janero.movies.service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.NoSuchElementException;

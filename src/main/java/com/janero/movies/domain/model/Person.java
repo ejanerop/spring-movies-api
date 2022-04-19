@@ -59,8 +59,8 @@ public class Person {
 
     @JsonIgnore
     public boolean isEmpty() {
-        return ((name == null || name.isEmpty()) && (birthday == null)
-                && (placeOfBirth == null || placeOfBirth.isEmpty()) && (adult == null));
+        return ((name == null || name.isEmpty()) || (birthday == null)
+                || (placeOfBirth == null || placeOfBirth.isEmpty()) || (adult == null));
     }
 
 }
