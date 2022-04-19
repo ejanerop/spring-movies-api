@@ -35,6 +35,9 @@ public class PersonService {
     }
 
     public Person savePerson(Person person) {
+        if (person == null || person.isEmpty()) {
+            throw new IllegalArgumentException("Person is invalid!");
+        }
         return personRepository.save(person);
     }
 
@@ -55,6 +58,9 @@ public class PersonService {
     }
 
     public void deletePerson(Person person) {
+        if (person == null || person.getId() == null) {
+            throw new IllegalArgumentException("Person is invalid!");
+        }
         personRepository.delete(person);
     }
 

@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,6 +55,12 @@ public class Person {
 
     public Set<Movie> getMoviesAsActor() {
         return moviesAsActor;
+    }
+
+    @JsonIgnore
+    public boolean isEmpty() {
+        return ((name == null || name.isEmpty()) && (birthday == null)
+                && (placeOfBirth == null || placeOfBirth.isEmpty()) && (adult == null));
     }
 
 }
