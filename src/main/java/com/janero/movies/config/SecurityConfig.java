@@ -36,12 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Enable CORS and disable CSRF
         http = http.cors().and().csrf().disable();
@@ -70,6 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Add JWT token filter
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean
