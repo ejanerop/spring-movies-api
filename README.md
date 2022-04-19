@@ -1,6 +1,12 @@
 # Movies API
 
-[![CodeFactor](https://www.codefactor.io/repository/github/ejanerop/spring-movies-api/badge)](https://www.codefactor.io/repository/github/ejanerop/spring-movies-api)
+
+<p align="left">
+ <a href="https://www.codefactor.io/repository/github/ejanerop/spring-movies-api"><img src="https://www.codefactor.io/repository/github/ejanerop/spring-movies-api/badge" alt="CodeFactor" /></a>
+ 
+ <img src="https://github.com/ejanerop/spring-movies-api/actions/workflows/docker-container.yml/badge.svg" />
+ 
+</p>
 
 Restful API built in Spring Boot that allows users to search for movies and actors. It also allows users to add movies and actors to the database.
 
