@@ -21,6 +21,9 @@ public class UserService {
 
     @Transactional
     public User create(CreateUserRequest request) {
+        if (request == null || request.isEmpty()) {
+            throw new ValidationException("User is null");
+        }
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new ValidationException("Username exists!");
         }
