@@ -1,4 +1,5 @@
 FROM maven:3.8.2-jdk-8 as builder
+WORKDIR /
 COPY . .
 RUN mvn package -Dmaven.test.skip
 
