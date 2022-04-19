@@ -40,13 +40,14 @@ public class Person {
 
     public Person() {}
 
-    public Person(String name, String biography, Date birthday, Date deathday,
-            String placeOfBirth) {
+    public Person(String name, String biography, Date birthday, Date deathday, String placeOfBirth,
+            Boolean adult) {
         this.setName(name);
         this.setBiography(biography);
         this.setBirthday(birthday);
         this.setDeathday(deathday);
         this.setPlaceOfBirth(placeOfBirth);
+        this.setAdult(adult);
     }
 
     public Set<Movie> getMoviesAsDirector() {

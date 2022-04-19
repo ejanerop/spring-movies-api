@@ -128,7 +128,8 @@ public class MovieMapperTests {
 
     @Test
     public void testMaptoEntityFromRequest() {
-        Person director = new Person();
+        Person director = new Person("Test Director", "biography", new Date(), new Date(),
+                "Test Place", true);
         director.setName("Test Director");
 
         personService.savePerson(director);

@@ -52,7 +52,7 @@ public class PersonEndpointsTests {
 
     @Test
     public void testGetPersonNoAuth() throws Exception {
-        Person person = new Person("Test", "Idle", new Date(), null, "Cuba");
+        Person person = new Person("Test", "Idle", new Date(), null, "Cuba", true);
         personService.savePerson(person);
         this.mockMvc.perform(get("/persons/" + person.getId())).andDo(print())
                 .andExpect(status().isUnauthorized());
@@ -61,7 +61,7 @@ public class PersonEndpointsTests {
     @Test
     @WithMockUser
     public void testGetPersonAuth() throws Exception {
-        Person person = new Person("Test", "Idle", new Date(), null, "Cuba");
+        Person person = new Person("Test", "Idle", new Date(), null, "Cuba", true);
         personService.savePerson(person);
 
         this.mockMvc.perform(get("/persons/" + person.getId())).andDo(print())
@@ -70,7 +70,7 @@ public class PersonEndpointsTests {
 
     @Test
     public void testSavePersonNoAuth() throws Exception {
-        Person person = new Person("Test", "Idle", new Date(), null, "Cuba");
+        Person person = new Person("Test", "Idle", new Date(), null, "Cuba", true);
         personService.savePerson(person);
 
         ObjectMapper mapper = new ObjectMapper();

@@ -46,6 +46,7 @@ public class PersonServiceTests {
         person.setBiography("biography");
         person.setAdult(true);
         person.setBirthday(new Date());
+        person.setPlaceOfBirth("Test place");
         personService.savePerson(person);
 
 
@@ -67,11 +68,7 @@ public class PersonServiceTests {
 
     @Test
     public void testDeletePerson() {
-        Person person = new Person();
-        person.setName("Eric");
-        person.setBiography("biography");
-        person.setAdult(true);
-        person.setBirthday(new Date());
+        Person person = new Person("Test", "test", new Date(), new Date(), "Test place", true);
         personService.savePerson(person);
 
         Person found = personService.getPerson(person.getId());
@@ -85,11 +82,7 @@ public class PersonServiceTests {
 
     @Test
     public void testUpdatePerson() {
-        Person person = new Person();
-        person.setName("Eric");
-        person.setBiography("biography");
-        person.setAdult(true);
-        person.setBirthday(new Date());
+        Person person = new Person("Test", "test", new Date(), new Date(), "Test place", true);
         personService.savePerson(person);
 
         Person found = personService.getPerson(person.getId());
@@ -114,14 +107,15 @@ public class PersonServiceTests {
 
     @Test
     public void testGetActors() {
-        Person actor = new Person("actor", "actor", new Date(), new Date(), "Test place");
+        Person actor = new Person("actor", "actor", new Date(), new Date(), "Test place", true);
         personService.savePerson(actor);
-        Person actor2 = new Person("actor2", "actor", new Date(), new Date(), "Test place");
+        Person actor2 = new Person("actor2", "actor", new Date(), new Date(), "Test place", true);
         personService.savePerson(actor2);
-        Person actor3 = new Person("actor3", "actor", new Date(), new Date(), "Test place");
+        Person actor3 = new Person("actor3", "actor", new Date(), new Date(), "Test place", true);
         personService.savePerson(actor3);
 
-        Person director = new Person("director", "director", new Date(), new Date(), "Test place2");
+        Person director =
+                new Person("director", "director", new Date(), new Date(), "Test place2", true);
         personService.savePerson(director);
 
         Set<Person> actors = new HashSet<Person>();
@@ -145,10 +139,11 @@ public class PersonServiceTests {
     @Test
     public void testGetDirectors() {
 
-        Person director = new Person("director", "director", new Date(), new Date(), "Test place");
+        Person director =
+                new Person("director", "director", new Date(), new Date(), "Test place", true);
         personService.savePerson(director);
         Person director2 =
-                new Person("director2", "director", new Date(), new Date(), "Test place2");
+                new Person("director2", "director", new Date(), new Date(), "Test place2", true);
         personService.savePerson(director2);
 
         Movie movie = new Movie("Test Movie", "test overview", new Date());

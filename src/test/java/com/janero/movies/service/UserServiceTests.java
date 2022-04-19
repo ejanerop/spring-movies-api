@@ -69,7 +69,7 @@ public class UserServiceTests {
     @Test
     public void testSaveUser() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("test");
+        request.setUsername("testUser");
         request.setPassword("test");
         request.setRePassword("test");
         User created = userService.create(request);
