@@ -3,22 +3,32 @@ package com.janero.movies.mapper;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.time.Period;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import com.janero.movies.domain.dto.MovieDTO;
 import com.janero.movies.domain.query.MovieQuery;
 import com.janero.movies.domain.request.MovieRequest;
+import com.janero.movies.service.PersonService;
 import com.janero.movies.domain.mapper.MovieMapper;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.domain.model.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
+@AutoConfigureTestDatabase
 public class MovieMapperTests {
 
     @Autowired
     private MovieMapper movieMapper;
+
+    @Autowired
+    private PersonService personService;
+
 
     @Test
     public void testMaptoDTONullMovie() {
@@ -116,4 +126,52 @@ public class MovieMapperTests {
         });
     }
 
+    @Test
+    public void testMaptoEntityFromRequest() {
+        Person director = new Person();
+        director.setName("Test Director");
+
+        personService.savePerson(director);
+
+        MovieRequest query = new MovieRequest();
+        query.setName("Test Movie");
+        query.setOverview("Test Overview");
+        query.setReleaseDate(new Date());
+        query.setAdult(true);
+        query.setBudget(15);
+        query.setRevenue(20);
+        query.setRuntime(20);
+        query.setDirector(director.getId());
+
+        Movie movie = movieMapper.mapToEntity(query);
+
+        assertAll(() -> {
+            assertEquals(query.getName(), movie.getName());
+            assertEquals(query.getOverview(), movie.getOverview());
+            assertEquals(query.getReleaseDate(), movie.getReleaseDate());
+            assertEquals(query.getAdult(), movie.getAdult());
+            assertEquals(query.getBudget(), movie.getBudget());
+            assertEquals(query.getRevenue(), movie.getRevenue());
+            assertEquals(query.getRuntime(), movie.getRuntime());
+            assertEquals(query.getDirector(), movie.getDirector().getId());
+        });
+    }
+
+    @Test
+    public void testMaptoEntityFromRequestNoDirector() {
+
+        MovieRequest query = new MovieRequest();
+        query.setName("Test Movie");
+        query.setOverview("Test Overview");
+        query.setReleaseDate(new Date());
+        query.setAdult(true);
+        query.setBudget(15);
+        query.setRevenue(20);
+        query.setRuntime(20);
+        query.setDirector(14L);
+
+        assertThrows(NoSuchElementException.class, () -> {
+            this.movieMapper.mapToEntity(query);
+        });
+    }
 }
