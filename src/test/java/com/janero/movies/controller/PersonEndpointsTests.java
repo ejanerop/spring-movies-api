@@ -2,6 +2,7 @@ package com.janero.movies.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -18,18 +19,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.janero.movies.domain.model.Person;
+import com.janero.movies.domain.request.PersonRequest;
+import com.janero.movies.service.PersonService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase
 public class PersonEndpointsTests {
 
     public static final MediaType APPLICATION_JSON_UTF8 =
             new MediaType(MediaType.APPLICATION_JSON.getType(),
                     MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private PersonService personService;
 
     @Test
     public void testGetActorsNoAuth() throws Exception {
@@ -46,16 +52,26 @@ public class PersonEndpointsTests {
 
     @Test
     public void testGetPersonNoAuth() throws Exception {
-        this.mockMvc.perform(get("/person/1")).andDo(print()).andExpect(status().isUnauthorized());
+        Person person = new Person("Test", "Idle", new Date(), null, "Cuba");
+        personService.savePerson(person);
+        this.mockMvc.perform(get("/persons/" + person.getId())).andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    public void testGetPersonAuth() throws Exception {
+        Person person = new Person("Test", "Idle", new Date(), null, "Cuba");
+        personService.savePerson(person);
+
+        this.mockMvc.perform(get("/persons/" + person.getId())).andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
     public void testSavePersonNoAuth() throws Exception {
-        Person person = new Person();
-        person.setName("Test");
-        person.setBirthday(new Date());
-        person.setPlaceOfBirth("test place");
-        person.setAdult(true);
+        Person person = new Person("Test", "Idle", new Date(), null, "Cuba");
+        personService.savePerson(person);
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -64,6 +80,24 @@ public class PersonEndpointsTests {
         this.mockMvc
                 .perform(post("/persons").contentType(APPLICATION_JSON_UTF8).content(requestJson))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    public void testSavePersonAuth() throws Exception {
+        PersonRequest request = new PersonRequest();
+        request.setName("Test");
+        request.setBirthday(new Date());
+        request.setPlaceOfBirth("test place");
+        request.setAdult(true);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(request);
+        this.mockMvc
+                .perform(post("/persons").contentType(APPLICATION_JSON_UTF8).content(requestJson))
+                .andExpect(status().isCreated());
     }
 
     @Test
