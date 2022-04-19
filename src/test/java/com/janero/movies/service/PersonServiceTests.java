@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -21,7 +22,7 @@ public class PersonServiceTests {
     public void contextLoads() {}
 
     @Test
-    public void testSavePerson() {
+    public void testSaveAndGetPerson() {
         Person person = new Person();
         person.setName("Eric");
         person.setBiography("biography");
@@ -46,6 +47,8 @@ public class PersonServiceTests {
 
         Person found = personService.getPerson(person.getId());
 
+        assertThat(person.getId()).isEqualTo(found.getId());
+
         personService.deletePerson(found);
 
         assertThrows(NoSuchElementException.class, () -> {
@@ -53,5 +56,34 @@ public class PersonServiceTests {
         });
     }
 
+    @Test
+    public void testUpdatePerson() {
+        Person person = new Person();
+        person.setName("Eric");
+        person.setBiography("biography");
+        person.setAdult(true);
+        person.setBirthday(new Date());
+        personService.savePerson(person);
+
+        Person found = personService.getPerson(person.getId());
+
+        assertThat(person.getId()).isEqualTo(found.getId());
+
+        found.setName("Eric2");
+        found.setBiography("biography2");
+        found.setAdult(false);
+        found.setBirthday(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000));
+        personService.savePerson(found);
+
+        Person updated = personService.getPerson(person.getId());
+
+        assertAll(() -> {
+            assertThat(updated.getName()).isEqualTo("Eric2");
+            assertThat(updated.getBiography()).isEqualTo("biography2");
+            assertThat(updated.getAdult()).isEqualTo(false);
+            assertThat(updated.getBirthday())
+                    .isEqualTo(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000));
+        });
+    }
 
 }

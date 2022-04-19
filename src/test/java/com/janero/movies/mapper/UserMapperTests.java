@@ -17,7 +17,7 @@ public class UserMapperTests {
     private UserMapper userMapper;
 
     @Test
-    public void testExpectNullPointerNullUser() {
+    public void testMaptoDTONullUser() {
         assertThrows(NullPointerException.class, () -> {
             this.userMapper.mapToDTO(null);
         });
