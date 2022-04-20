@@ -1,4 +1,4 @@
-package com.janero.movies.controller;
+package com.janero.movies.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

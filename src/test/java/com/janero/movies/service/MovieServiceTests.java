@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Date;
 import java.util.NoSuchElementException;
-import com.janero.movies.domain.model.Constants;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.domain.model.Person;
+import com.janero.movies.util.Constants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -137,7 +137,7 @@ public class MovieServiceTests {
 
         assertThat(
                 movieService.getMovies(new Movie(), PageRequest.of(0, Constants.DEFAULT_PAGE_SIZE))
-                        .getNumberOfElements()).isEqualTo(1);
+                        .getNumberOfElements()).isPositive();
     }
 
 

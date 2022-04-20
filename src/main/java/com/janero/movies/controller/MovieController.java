@@ -25,9 +25,9 @@ import com.janero.movies.domain.query.MovieQuery;
 import com.janero.movies.domain.request.MovieRequest;
 import com.janero.movies.domain.response.ResponseMessage;
 import com.janero.movies.domain.mapper.MovieMapper;
-import com.janero.movies.domain.model.Constants;
 import com.janero.movies.domain.model.Movie;
 import com.janero.movies.service.MovieService;
+import com.janero.movies.util.Constants;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController

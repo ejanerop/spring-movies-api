@@ -1,11 +1,10 @@
-package com.janero.movies.controller;
+package com.janero.movies.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,7 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.nio.charset.Charset;
 import java.util.Date;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -21,15 +19,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.janero.movies.domain.model.Person;
 import com.janero.movies.domain.request.PersonRequest;
 import com.janero.movies.service.PersonService;
+import com.janero.movies.util.Constants;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
 public class PersonEndpointsTests {
 
-    public static final MediaType APPLICATION_JSON_UTF8 =
-            new MediaType(MediaType.APPLICATION_JSON.getType(),
-                    MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -77,8 +74,8 @@ public class PersonEndpointsTests {
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestJson = ow.writeValueAsString(person);
-        this.mockMvc
-                .perform(post("/persons").contentType(APPLICATION_JSON_UTF8).content(requestJson))
+        this.mockMvc.perform(
+                post("/persons").contentType(Constants.APPLICATION_JSON_UTF8).content(requestJson))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -95,8 +92,8 @@ public class PersonEndpointsTests {
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestJson = ow.writeValueAsString(request);
-        this.mockMvc
-                .perform(post("/persons").contentType(APPLICATION_JSON_UTF8).content(requestJson))
+        this.mockMvc.perform(
+                post("/persons").contentType(Constants.APPLICATION_JSON_UTF8).content(requestJson))
                 .andExpect(status().isCreated());
     }
 
@@ -113,8 +110,8 @@ public class PersonEndpointsTests {
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestJson = ow.writeValueAsString(person);
-        this.mockMvc
-                .perform(put("/persons").contentType(APPLICATION_JSON_UTF8).content(requestJson))
+        this.mockMvc.perform(
+                put("/persons").contentType(Constants.APPLICATION_JSON_UTF8).content(requestJson))
                 .andExpect(status().isUnauthorized());
     }
 
