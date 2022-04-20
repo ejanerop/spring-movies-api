@@ -150,7 +150,7 @@ public class MovieAuthTests {
 
         movie = movieService.getMovie(movie.getId());
 
-        this.mockMvc.perform(delete("/movies/" + movie.getId())).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/movies/" + movie.getId())).andExpect(status().isOk());
     }
 
 
