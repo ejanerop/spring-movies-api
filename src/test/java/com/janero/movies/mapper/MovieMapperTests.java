@@ -3,7 +3,6 @@ package com.janero.movies.mapper;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.time.Period;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import com.janero.movies.domain.dto.MovieDTO;

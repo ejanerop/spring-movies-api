@@ -104,7 +104,7 @@ public class PersonController {
     public ResponseEntity<ResponseMessage> deletePerson(@PathVariable Long id) {
         personService.deletePerson(personService.getPerson(id));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ResponseMessage(200, "Person deleted", true));
+                .body(new ResponseMessage(200, "Person deleted!", true));
     }
 
     // ----------------------------------------------------------------------------------
