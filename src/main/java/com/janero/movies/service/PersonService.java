@@ -30,6 +30,9 @@ public class PersonService {
     }
 
     public Person getPerson(Long id) {
+        if (id == null) {
+            throw new NoSuchElementException("Person id is null");
+        }
         return personRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Person not found!"));
     }

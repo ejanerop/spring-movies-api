@@ -30,9 +30,9 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private @Getter @Setter Date releaseDate;
     private @Getter @Setter Boolean adult;
-    private @Getter @Setter int budget;
-    private @Getter @Setter int revenue;
-    private @Getter @Setter int runtime;
+    private @Getter @Setter Integer budget;
+    private @Getter @Setter Integer revenue;
+    private @Getter @Setter Integer runtime;
 
     @ManyToMany
     @JsonManagedReference
@@ -47,6 +47,9 @@ public class Movie {
         this.setName(name);
         this.setOverview(overview);
         this.setReleaseDate(releaseDate);
+        this.setBudget(0);
+        this.setRevenue(0);
+        this.setRuntime(0);
     }
 
     public void setYear(int year) {
@@ -63,6 +66,13 @@ public class Movie {
             return this.releaseDate.getYear();
         }
         return -1;
+    }
+
+    @JsonIgnore
+    public boolean isEmpty() {
+        return ((name == null || name.isEmpty()) && (overview == null || overview.isEmpty())
+                && (releaseDate == null) && (budget == null) && (revenue == null)
+                && (runtime == null) && (director == null));
     }
 
 }

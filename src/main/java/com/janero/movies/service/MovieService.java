@@ -27,11 +27,17 @@ public class MovieService {
     }
 
     public Movie getMovie(Long id) {
+        if (id == null) {
+            throw new NoSuchElementException("Person id is null");
+        }
         return movieRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Movie not found!"));
     }
 
     public Movie saveMovie(Movie movie) {
+        if (movie == null || movie.isEmpty()) {
+            throw new IllegalArgumentException("Movie is invalid!");
+        }
         return movieRepository.save(movie);
     }
 
@@ -58,6 +64,9 @@ public class MovieService {
     }
 
     public void deleteMovie(Movie movie) {
+        if (movie == null || movie.getId() == null) {
+            throw new IllegalArgumentException("Movie is invalid!");
+        }
         movieRepository.delete(movie);
     }
 }

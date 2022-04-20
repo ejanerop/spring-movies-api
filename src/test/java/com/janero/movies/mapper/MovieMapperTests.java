@@ -169,7 +169,6 @@ public class MovieMapperTests {
         query.setBudget(15);
         query.setRevenue(20);
         query.setRuntime(20);
-        query.setDirector(14L);
 
         assertThrows(NoSuchElementException.class, () -> {
             this.movieMapper.mapToEntity(query);
