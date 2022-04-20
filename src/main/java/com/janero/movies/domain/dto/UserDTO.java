@@ -1,10 +1,10 @@
 package com.janero.movies.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)

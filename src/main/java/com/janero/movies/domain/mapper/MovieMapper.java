@@ -1,15 +1,15 @@
 package com.janero.movies.domain.mapper;
 
-import com.janero.movies.domain.dto.MovieDTO;
-import com.janero.movies.domain.query.MovieQuery;
-import com.janero.movies.domain.request.MovieRequest;
-import com.janero.movies.domain.model.Movie;
-import com.janero.movies.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+import com.janero.movies.domain.dto.MovieDTO;
+import com.janero.movies.domain.model.Movie;
+import com.janero.movies.domain.query.MovieQuery;
+import com.janero.movies.domain.request.MovieRequest;
+import com.janero.movies.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MovieMapper implements Mapper<Movie, MovieDTO> {

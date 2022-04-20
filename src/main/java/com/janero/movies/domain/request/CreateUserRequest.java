@@ -1,11 +1,10 @@
 package com.janero.movies.domain.request;
 
-import lombok.Data;
-
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Set;
+import lombok.Data;
 
 @Data
 public class CreateUserRequest implements Request {
